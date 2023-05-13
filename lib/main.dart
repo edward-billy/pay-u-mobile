@@ -14,16 +14,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: CheckAuth(),
-      darkTheme: ThemeData(
-          brightness: Brightness.dark, accentColor: Colors.blueAccent),
-      themeMode: ThemeMode.dark,
+      home: const CheckAuth(),
+      darkTheme: ThemeData.dark(), // standard dark theme
+      themeMode: ThemeMode.system,
     );
   }
 }
 
 class CheckAuth extends StatefulWidget {
+  const CheckAuth({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CheckAuthState createState() => _CheckAuthState();
 }
 
@@ -54,7 +56,7 @@ class _CheckAuthState extends State<CheckAuth> {
     if (isAuth) {
       child = Home();
     } else {
-      child = Login();
+      child = const Login();
     }
 
     return Scaffold(

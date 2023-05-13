@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'http://127.0.0.1:8000/api';
+  final String _url = 'http://192.168.0.102:8000/api';
   dynamic token;
 
   _getToken() async {
@@ -13,16 +14,18 @@ class Network {
   }
 
   auth(data, apiURL) async {
-    var fullUrl = '$_url$apiURL';
-    return await http.post(fullUrl as Uri,
+    var fullUrl = Uri.parse(_url + apiURL);
+    print(fullUrl);
+    print(data);
+    return await http.post(fullUrl,
         body: jsonEncode(data), headers: _setHeaders());
   }
 
   getData(apiURL) async {
-    var fullUrl = _url + apiURL;
+    var fullUrl = Uri.parse(_url + apiURL);
     await _getToken();
     return await http.get(
-      fullUrl as Uri,
+      fullUrl,
       headers: _setHeaders(),
     );
   }

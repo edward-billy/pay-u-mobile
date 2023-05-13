@@ -6,6 +6,7 @@ import 'login.dart';
 
 class Home extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
 }
 
@@ -32,14 +33,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff151515),
+      backgroundColor: const Color(0xff151515),
       appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Color(0xff151515),
+        title: const Text('Home'),
+        backgroundColor: const Color(0xff151515),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.power_settings_new),
+            icon: const Icon(Icons.power_settings_new),
             onPressed: () {
               logout();
             },
@@ -48,12 +49,12 @@ class _HomeState extends State<Home> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Hello, ',
                     style: TextStyle(
                       fontSize: 20,
@@ -61,7 +62,8 @@ class _HomeState extends State<Home> {
                   ),
                   Text(
                     '${name}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               )
@@ -79,8 +81,9 @@ class _HomeState extends State<Home> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');
       localStorage.remove('token');
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+          context, MaterialPageRoute(builder: (context) => const Login()));
     }
   }
 }// TODO Implement this library.

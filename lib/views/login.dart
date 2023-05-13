@@ -37,27 +37,27 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(0xff151515),
+      backgroundColor: const Color(0xff151515),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 28, vertical: 72),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 72),
           child: Column(
             children: [
               Card(
                 elevation: 4.0,
                 color: Colors.white10,
-                margin: EdgeInsets.only(top: 86),
+                margin: const EdgeInsets.only(top: 86),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Login",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -65,11 +65,11 @@ class _LoginState extends State<Login> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
                         TextFormField(
                             cursorColor: Colors.blue,
                             keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "Email",
                             ),
                             validator: (emailValue) {
@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                               email = emailValue;
                               return null;
                             }),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         TextFormField(
                             cursorColor: Colors.blue,
                             keyboardType: TextInputType.text,
@@ -100,44 +100,45 @@ class _LoginState extends State<Login> {
                               password = passwordValue;
                               return null;
                             }),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
                               _login();
+                              debugPrint("test");
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blueAccent,
-                            onPrimary: Colors.white,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blueAccent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 18, vertical: 10),
                             child: Text(
                               _isLoading ? 'Processing..' : 'Login',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Does'nt have an account? ",
                     style: TextStyle(
                       color: Colors.white,
@@ -146,12 +147,10 @@ class _LoginState extends State<Login> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => Register()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Register()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Register',
                       style: TextStyle(
                         color: Colors.white,
@@ -182,9 +181,10 @@ class _LoginState extends State<Login> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
-        new MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => Home()),
       );
     } else {
       _showMsg(body['message']);

@@ -38,7 +38,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(0xff151515),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 28, vertical: 72),
@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
               Card(
                 elevation: 4.0,
                 color: Colors.white10,
-                margin: EdgeInsets.only(top: 86),
+                margin: const EdgeInsets.only(top: 86),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
                 ),
@@ -126,16 +126,16 @@ class _RegisterState extends State<Register> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blueAccent,
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 18, vertical: 10),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
-                            primary: Colors.blueAccent,
-                            onPrimary: Colors.white,
                           ),
                           child: Text(
                             _isLoading ? 'Processing..' : 'Register',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.normal,
                             ),
@@ -146,13 +146,13 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Already have an account? ",
                     style: TextStyle(
                       color: Colors.white,
@@ -162,9 +162,9 @@ class _RegisterState extends State<Register> {
                   InkWell(
                     onTap: () {
                       Navigator.pop(context,
-                          new MaterialPageRoute(builder: (context) => Login()));
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                         color: Colors.white,
@@ -195,6 +195,7 @@ class _RegisterState extends State<Register> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
