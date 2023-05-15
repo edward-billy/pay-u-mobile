@@ -30,12 +30,13 @@ class _HomeState extends State<Home> {
     }
   }
 
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff151515),
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Pay-U'),
         backgroundColor: const Color(0xff151515),
         automaticallyImplyLeading: false,
         actions: [
@@ -71,6 +72,21 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: "Dashboard"),
+          NavigationDestination(
+              icon: Icon(Icons.shopping_cart), label: "Kasir"),
+          NavigationDestination(icon: Icon(Icons.history), label: "History"),
+          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPage = index;
+          });
+        },
+        selectedIndex: currentPage,
+      ),
     );
   }
 
@@ -79,6 +95,7 @@ class _HomeState extends State<Home> {
     var body = json.decode(res.body);
     if (body['success']) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
+
       localStorage.remove('user');
       localStorage.remove('token');
       // ignore: use_build_context_synchronously

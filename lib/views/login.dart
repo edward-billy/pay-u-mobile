@@ -139,7 +139,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Does'nt have an account? ",
+                    "Doesn't have an account? ",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
