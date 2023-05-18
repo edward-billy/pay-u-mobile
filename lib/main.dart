@@ -3,6 +3,7 @@ import 'views/home.dart';
 import 'views/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   runApp(const MyApp());
 }
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       home: const CheckAuth(),
       darkTheme: ThemeData.dark(), // standard dark theme
       themeMode: ThemeMode.system,
+      navigatorKey: navigatorKey,
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'http://192.168.0.102:8000/api';
+  final String _url = 'http://192.168.0.103:8000/api';
   dynamic token;
 
   _getToken() async {
@@ -24,6 +24,7 @@ class Network {
   getData(apiURL) async {
     var fullUrl = Uri.parse(_url + apiURL);
     await _getToken();
+    print(fullUrl);
     return await http.get(
       fullUrl,
       headers: _setHeaders(),
