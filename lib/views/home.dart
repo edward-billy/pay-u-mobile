@@ -3,11 +3,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:payu/views/dashboard.dart';
 import 'package:payu/views/history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'dart:convert';
-import '../main.dart';
+import 'buttonnav.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
@@ -37,6 +38,13 @@ class _HomeState extends State<Home> {
   }
 
   int currentPage = 0;
+
+  void onTabChanged(int index) {
+    setState(() {
+      currentPage = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,50 +62,17 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      //   body: SafeArea(
-      //   child: Container(
-      //     padding: const EdgeInsets.all(15),
-      //     child: Column(
-      //       children: [
-      //         Row(
-      //           children: [
-      //             const Text(
-      //               'Hello, ',
-      //               style: TextStyle(
-      //                 fontSize: 20,
-      //               ),
-      //             ),
-      //             Text(
-      //               '${name}',
-      //               style: const TextStyle(
-      //                   fontSize: 20, fontWeight: FontWeight.bold),
-      //             ),
-      //           ],
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: "Dashboard"),
-          NavigationDestination(
-              icon: Icon(Icons.shopping_cart), label: "Kasir"),
-          NavigationDestination(icon: Icon(Icons.history), label: "History"),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+      body: IndexedStack(
+        index: currentPage,
+        children: [
+          DashboardScreen(),
+          HistoryScreen(),
+          HistoryScreen(),
         ],
-        onDestinationSelected: (int index) async {
-          setState(() {
-            currentPage = index;
-          });
-          if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HistoryScreen()),
-            );
-          }
-        },
-        selectedIndex: currentPage,
+      ),
+      bottomNavigationBar: BottomNav(
+        currentIndex: currentPage,
+        onTabChanged: onTabChanged,
       ),
     );
   }
