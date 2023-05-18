@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
+import 'buttonnav.dart';
 
 import 'home.dart';
 import 'login.dart';
@@ -28,23 +29,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     });
   }
 
-  int currentPage = 2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pay-U | History'),
-        backgroundColor: const Color(0xff151515),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.power_settings_new),
-            onPressed: () {
-              logout();
-            },
-          )
-        ],
-      ),
       body: SingleChildScrollView(
         child: DataTable(
           columns: [
@@ -76,27 +63,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: "Dashboard"),
-          NavigationDestination(
-              icon: Icon(Icons.shopping_cart), label: "Kasir"),
-          NavigationDestination(icon: Icon(Icons.history), label: "History"),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-        onDestinationSelected: (int index) async {
-          setState(() {
-            currentPage = index;
-          });
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          }
-        },
-        selectedIndex: currentPage,
-      ),
+      // bottomNavigationBar: BottomNav(
+      //   currentIndex: 2,
+      //   onTabChanged: (index) {},
+      // ),
     );
   }
 
