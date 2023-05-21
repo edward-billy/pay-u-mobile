@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'buttonnav.dart';
-
+import 'package:number_pagination/number_pagination.dart';
 import 'home.dart';
 import 'login.dart';
 
@@ -14,6 +14,14 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   List<Map<String, dynamic>> historyData = [];
+  int currentPage = 1;
+  int totalPages = 1;
+
+  void setPage(int page) {
+    setState(() {
+      currentPage = page;
+    });
+  }
 
   @override
   void initState() {
@@ -21,11 +29,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
     loadHistoryData();
   }
 
+  int calculateTotalPages(int totalItems) {
+    const double pageSize = 8;
+    return (totalItems / pageSize).ceil();
+  }
+
   Future<void> loadHistoryData() async {
     List<Map<String, dynamic>> data = await getHistoryData();
     setState(() {
       historyData = data;
-      print(historyData);
+      totalPages = calculateTotalPages(data.length);
     });
   }
 
@@ -33,32 +46,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: DataTable(
-          columns: [
-            const DataColumn(label: Text('No')),
-            const DataColumn(label: Text('Invoice ID')),
-            const DataColumn(label: Text('Nama Customer')),
-            const DataColumn(label: Text('Total')),
-            const DataColumn(label: Text('Action')),
-          ],
-          rows: List<DataRow>.generate(
-            historyData.length,
-            (index) => DataRow(
-              cells: [
-                DataCell(Text((index + 1).toString())),
-                DataCell(Text(historyData[index]['invoiceId'].toString())),
-                DataCell(Text(historyData[index]['nama'].toString())),
-                DataCell(Text('Rp. ${historyData[index]['total']}-')),
-                DataCell(
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle button press
-                      // You can navigate to the detail screen here
-                    },
-                    child: const Text('Detail'),
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(16.0),
+          child: DataTable(
+            columns: [
+              const DataColumn(label: Text('No')),
+              const DataColumn(label: Text('Invoice ID')),
+              const DataColumn(label: Text('Nama Kasir')),
+              const DataColumn(label: Text('Nama Customer')),
+              const DataColumn(label: Text('Total')),
+              const DataColumn(label: Text('Action')),
+            ],
+            rows: List<DataRow>.generate(
+              historyData.length,
+              (index) => DataRow(
+                cells: [
+                  DataCell(Text((index + 1).toString())),
+                  DataCell(Text(historyData[index]['invoiceId'].toString())),
+                  DataCell(Text(historyData[index]['name'].toString())),
+                  DataCell(Text(historyData[index]['nama'].toString())),
+                  DataCell(Text('Rp. ${historyData[index]['total']}-')),
+                  DataCell(
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                        // You can navigate to the detail screen here
+                      },
+                      child: const Text('Detail'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
