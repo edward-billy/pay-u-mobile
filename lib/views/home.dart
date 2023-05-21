@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:payu/views/dashboard.dart';
 import 'package:payu/views/history.dart';
 import 'package:payu/views/produk.dart';
+import 'package:payu/views/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'dart:convert';
 import 'buttonnav.dart';
+import 'kasir.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
@@ -68,7 +70,9 @@ class _HomeState extends State<Home> {
         children: [
           DashboardScreen(),
           ProdukScreen(),
+          KasirScreen(),
           HistoryScreen(),
+          ProfileScreen()
         ],
       ),
       bottomNavigationBar: BottomNav(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'buttonnav.dart';
-import 'package:number_pagination/number_pagination.dart';
+
 import 'home.dart';
 import 'login.dart';
 
@@ -14,14 +14,6 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   List<Map<String, dynamic>> historyData = [];
-  int currentPage = 1;
-  int totalPages = 1;
-
-  void setPage(int page) {
-    setState(() {
-      currentPage = page;
-    });
-  }
 
   @override
   void initState() {
@@ -29,16 +21,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
     loadHistoryData();
   }
 
-  int calculateTotalPages(int totalItems) {
-    const double pageSize = 8;
-    return (totalItems / pageSize).ceil();
-  }
-
   Future<void> loadHistoryData() async {
     List<Map<String, dynamic>> data = await getHistoryData();
     setState(() {
       historyData = data;
-      totalPages = calculateTotalPages(data.length);
+      print(historyData);
     });
   }
 

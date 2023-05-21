@@ -21,6 +21,14 @@ class Network {
         body: jsonEncode(data), headers: _setHeaders());
   }
 
+  update(data, apiURL) async {
+    var fullUrl = Uri.parse(_url + apiURL);
+    print(fullUrl);
+    print(data);
+    return await http.patch(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
+  }
+
   getData(apiURL) async {
     var fullUrl = Uri.parse(_url + apiURL);
     await _getToken();
