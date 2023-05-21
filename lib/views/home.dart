@@ -69,6 +69,7 @@ class _HomeState extends State<Home> {
           DashboardScreen(),
           ProdukScreen(),
           HistoryScreen(),
+          HistoryScreen(),
         ],
       ),
       bottomNavigationBar: BottomNav(
