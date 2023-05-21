@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.payu">
+    <!-- Permissions options for the `location` group -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> 
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    <application
-        android:label="payu"
+        android:label="Pay-U"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
