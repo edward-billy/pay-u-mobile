@@ -14,6 +14,7 @@ class BottomNav extends StatelessWidget {
     return BottomNavigationBar(
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
+        BottomNavigationBarItem(icon: Icon(Icons.inventory), label: "Produk"),
         BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart), label: "Kasir"),
         BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
@@ -21,6 +22,8 @@ class BottomNav extends StatelessWidget {
       ],
       currentIndex: currentIndex,
       onTap: onTabChanged,
+      unselectedItemColor: Colors.white,
+      selectedItemColor: Colors.lightBlue,
     );
   }
 }
