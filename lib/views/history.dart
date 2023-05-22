@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:payu/app/api.dart';
+import 'buttonnav.dart';
+
+import 'home.dart';
+import 'login.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
@@ -14,6 +18,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   List<Map<String, dynamic>> historyData = [];
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -25,6 +30,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> data = await getHistoryData();
     setState(() {
       historyData = data;
+      print(historyData);
     });
   }
 
