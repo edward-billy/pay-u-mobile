@@ -4,11 +4,8 @@ import 'package:payu/views/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'buttonnav.dart';
-import 'login.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -84,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        updateUserProfile(updatedName, updatedEmail);
+                        updateProfile(updatedName, updatedEmail);
                       },
                       child: const Text("UPDATE",
                           style: TextStyle(
@@ -100,43 +97,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ));
   }
 
-  Future<void> updateUserProfile(String name, String email) async {
-    var data = {
-      'name': name,
-      'email': email,
-    };
-    final res = await Network().update(data, '/profile');
-    var body = json.decode(res.body);
-
-    if (body['success']) {
-      // Perbarui profil berhasil
-      print('Profile updated successfully');
-    } else {
-      // Gagal memperbarui profil
-      print('Failed to update profile');
+  Future<void> updateProfile(String newName, String newEmail) async {
+    try {
+      await Network().updateProfile(newName, newEmail, '/profile');
+    } catch (error) {
+      print('Terjadi kesalahan: $error');
     }
   }
-}
-
-Widget buildTextField(String labelText, String placeholder,
-    {required TextEditingController controller}) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 30),
-    child: TextField(
-      // obscureText: isPasswordTextField ? isObscurePassword : false,
-      decoration: InputDecoration(
-          // suffixIcon: isPasswordTextField
-          //     ? IconButton(
-          //         icon: Icon(Icons.remove_red_eye, color: Colors.grey),
-          //         onPressed: () {},
-          //       )
-          //     : null,
-          contentPadding: const EdgeInsets.only(bottom: 5),
-          labelText: labelText,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          hintText: placeholder,
-          hintStyle: const TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
-    ),
-  );
 }

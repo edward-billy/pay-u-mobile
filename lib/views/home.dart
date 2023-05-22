@@ -50,6 +50,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    _loadUserData();
     return Scaffold(
       backgroundColor: const Color(0xff151515),
       appBar: AppBar(
@@ -95,4 +96,4 @@ class _HomeState extends State<Home> {
           context, MaterialPageRoute(builder: (context) => const Login()));
     }
   }
-}// TODO Implement this library.
+}
