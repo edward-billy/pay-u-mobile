@@ -1,4 +1,4 @@
-# payu
+# pay-u
 
 A new Flutter project.
 
