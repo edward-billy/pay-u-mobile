@@ -112,13 +112,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
           child: Column(
             children: [
               DataTable(
-                columns: [
-                  const DataColumn(label: Text('No')),
-                  const DataColumn(label: Text('Invoice ID')),
-                  const DataColumn(label: Text('Nama Kasir')),
-                  const DataColumn(label: Text('Nama Customer')),
-                  const DataColumn(label: Text('Total')),
-                  const DataColumn(label: Text('Action')),
+                columns: const [
+                  DataColumn(label: Text('No')),
+                  DataColumn(label: Text('Invoice ID')),
+                  DataColumn(label: Text('Nama Kasir')),
+                  DataColumn(label: Text('Nama Customer')),
+                  DataColumn(label: Text('Total')),
+                  DataColumn(label: Text('Action')),
                 ],
                 rows: List<DataRow>.generate(
                   historyData.length,
@@ -158,7 +158,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: generateAndDownloadPDF,
                 child: Text('Download PDF'),

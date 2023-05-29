@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:payu/views/produkDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'buttonnav.dart';
@@ -37,14 +38,14 @@ class _ProdukScreenState extends State<ProdukScreen> {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(16.0),
           child: DataTable(
-            columns: [
-              const DataColumn(label: Text('No')),
-              const DataColumn(label: Text('Nama Produk')),
-              const DataColumn(label: Text('Kategori')),
-              const DataColumn(label: Text('Deskripsi')),
-              const DataColumn(label: Text('Stok')),
-              const DataColumn(label: Text('Harga')),
-              const DataColumn(label: Text('Action')),
+            columns: const [
+              DataColumn(label: Text('No')),
+              DataColumn(label: Text('Nama Produk')),
+              DataColumn(label: Text('Kategori')),
+              DataColumn(label: Text('Deskripsi')),
+              DataColumn(label: Text('Stok')),
+              DataColumn(label: Text('Harga')),
+              DataColumn(label: Text('Action')),
             ],
             rows: List<DataRow>.generate(
               produkData.length,
@@ -61,8 +62,21 @@ class _ProdukScreenState extends State<ProdukScreen> {
                   DataCell(
                     ElevatedButton(
                       onPressed: () {
-                        // Handle button press
-                        // You can navigate to the detail screen here
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProdukDetail(
+                                id: produkData[index]['id'],
+                                nama: produkData[index]['nama'],
+                                kategori: produkData[index]['kategori']['nama']
+                                    .toString(),
+                                deskripsi:
+                                    produkData[index]['deskripsi'].toString(),
+                                stok: produkData[index]['stok'].toString(),
+                                harga: produkData[index]['harga'].toString(),
+                                data: getProdukDetail(produkData[index]['id']),
+                              ),
+                            ));
                       },
                       child: const Text('Detail'),
                     ),
@@ -93,15 +107,26 @@ class _ProdukScreenState extends State<ProdukScreen> {
           context, MaterialPageRoute(builder: (context) => const Login()));
     }
   }
-}
 
-Future<List<Map<String, dynamic>>> getProdukData() async {
-  var res = await Network().getData('/product');
-  var body = json.decode(res.body);
+  Future<List<Map<String, dynamic>>> getProdukData() async {
+    var res = await Network().getData('/product');
+    var body = json.decode(res.body);
 
-  // print(body['data']['data']);
-  if (body['data'] != null) {
-    return List<Map<String, dynamic>>.from(body['data']['data']);
+    // print(body['data']['data']);
+    if (body['data'] != null) {
+      return List<Map<String, dynamic>>.from(body['data']['data']);
+    }
+    return []; // Return an empty list if there's an error or no data
   }
-  return []; // Return an empty list if there's an error or no data
+
+  Future<List<Map<String, dynamic>>> getProdukDetail(int id) async {
+    var res = await Network().getData('/product/$id');
+    var body = json.decode(res.body);
+
+    // print(body['data']['data']);
+    if (body['data'] != null) {
+      return List<Map<String, dynamic>>.from(body['data']['data']);
+    }
+    return []; // Return an empty list if there's an error or no data
+  }
 }

@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
 import 'buttonnav.dart';
-
+import 'utils.dart';
 import 'home.dart';
 import 'login.dart';
 
@@ -44,26 +42,350 @@ class _DashboardScreen extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    double baseWidth = 1194;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return Container(
+      // todayssalesVCS (0:883)
+      margin: EdgeInsets.fromLTRB(39 * fem, 0 * fem, 26 * fem, 53 * fem),
+      padding: EdgeInsets.fromLTRB(28.81 * fem, 19 * fem, 28 * fem, 20 * fem),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Color(0xff313131),
+        borderRadius: BorderRadius.circular(10 * fem),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
-          Text(
-            'Total Penjualan: $totalPenjualan',
-            style: const TextStyle(fontSize: 16),
+          Container(
+            // todkeA (0:885)
+            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 19 * fem),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  // todayssalesHPC (0:886)
+                  margin:
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                  child: Text(
+                    'Summary Sales',
+                    style: SafeGoogleFont(
+                      'Inter',
+                      fontSize: 15 * ffem,
+                      fontWeight: FontWeight.w600,
+                      height: 1.2125 * ffem / fem,
+                      color: const Color(0xffffffff),
+                    ),
+                  ),
+                ),
+                Text(
+                  // salessummaryPBL (0:887)
+                  'Pay-U',
+                  style: SafeGoogleFont(
+                    'Inter',
+                    fontSize: 10 * ffem,
+                    fontWeight: FontWeight.w500,
+                    height: 1.2125 * ffem / fem,
+                    color: Color(0xffa0a0a0),
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text('PenjualanBulan: $totalPenjualanBulan',
-              style: const TextStyle(fontSize: 16)),
-          Text('ProdukTerjual: $totalProdukTerjual',
-              style: const TextStyle(fontSize: 16)),
-          Text('Pengunjung: $totalPengunjung',
-              style: const TextStyle(fontSize: 16)),
+          Container(
+            // cardsWFx (0:888)
+            margin: EdgeInsets.fromLTRB(0.19 * fem, 0 * fem, 0 * fem, 0 * fem),
+            width: double.infinity,
+            height: 107 * fem,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  // card1R82 (0:889)
+                  padding: EdgeInsets.fromLTRB(
+                      26.54 * fem, 10 * fem, 26.54 * fem, 10 * fem),
+                  width: 230 * fem,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xff585858),
+                    borderRadius: BorderRadius.circular(10 * fem),
+                  ),
+                  child: Container(
+                    // details18YE (0:891)
+                    width: 136 * fem,
+                    height: 74 * fem,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // icon2dc (0:892)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 12 * fem),
+                          width: 26 * fem,
+                          height: 26 * fem,
+                          child: Image.asset(
+                            'assets/images/icon.png',
+                            width: 26 * fem,
+                            height: 26 * fem,
+                          ),
+                        ),
+                        Container(
+                          // body18wY (0:897)
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                // rp1522519800H3k (0:898)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                child: Text(
+                                  'Rp. $totalPenjualanBulan',
+                                  style: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 15 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2125 * ffem / fem,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                // totalsalesANS (0:899)
+                                'Total Penjualan',
+                                style: SafeGoogleFont(
+                                  'Inter',
+                                  fontSize: 10 * ffem,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2125 * ffem / fem,
+                                  color: Color(0xffe7e7e7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20 * fem,
+                ),
+                Container(
+                  // card2g5t (0:900)
+                  padding: EdgeInsets.fromLTRB(
+                      30.96 * fem, 11 * fem, 30.96 * fem, 22 * fem),
+                  width: 230 * fem,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xff585858),
+                    borderRadius: BorderRadius.circular(10 * fem),
+                  ),
+                  child: Container(
+                    // details2awx (0:902)
+                    width: 69 * fem,
+                    height: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // iconwGi (0:903)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 12 * fem),
+                          width: 26 * fem,
+                          height: 26 * fem,
+                          child: Image.asset(
+                            'assets/images/icon-fbt.png',
+                            width: 26 * fem,
+                            height: 26 * fem,
+                          ),
+                        ),
+                        Container(
+                          // body2SDU (0:908)
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                // b6N (0:909)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                child: Text(
+                                  '$totalPenjualanBulan',
+                                  style: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 15 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2125 * ffem / fem,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                // totalorderhfC (0:910)
+                                'Penjualan Bulanan',
+                                style: SafeGoogleFont(
+                                  'Inter',
+                                  fontSize: 10 * ffem,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2125 * ffem / fem,
+                                  color: Color(0xffe7e7e7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20 * fem,
+                ),
+                Container(
+                  // card3EQE (0:911)
+                  padding: EdgeInsets.fromLTRB(
+                      30.96 * fem, 11 * fem, 30.96 * fem, 22 * fem),
+                  width: 230 * fem,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xff585858),
+                    borderRadius: BorderRadius.circular(10 * fem),
+                  ),
+                  child: Container(
+                    // details3ZBc (0:913)
+                    width: 62 * fem,
+                    height: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // iconW6r (0:914)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 12 * fem),
+                          width: 26 * fem,
+                          height: 26 * fem,
+                          child: Image.asset(
+                            'assets/images/icon-fHg.png',
+                            width: 26 * fem,
+                            height: 26 * fem,
+                          ),
+                        ),
+                        Container(
+                          // body3DGA (0:917)
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                // yWE (0:918)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                child: Text(
+                                  '$totalProdukTerjual',
+                                  style: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 15 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2125 * ffem / fem,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                // productsoldVjU (0:919)
+                                'Produk Terjual',
+                                style: SafeGoogleFont(
+                                  'Inter',
+                                  fontSize: 10 * ffem,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2125 * ffem / fem,
+                                  color: Color(0xffe7e7e7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20 * fem,
+                ),
+                Container(
+                  // card4zgE (0:920)
+                  padding: EdgeInsets.fromLTRB(
+                      30.96 * fem, 11 * fem, 30.96 * fem, 22 * fem),
+                  width: 230 * fem,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xff585858),
+                    borderRadius: BorderRadius.circular(10 * fem),
+                  ),
+                  child: Container(
+                    // details4UrJ (0:922)
+                    width: 72 * fem,
+                    height: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // icon1rE (0:923)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 12 * fem),
+                          width: 26 * fem,
+                          height: 26 * fem,
+                          child: Image.asset(
+                            'assets/images/icon-4WA.png',
+                            width: 26 * fem,
+                            height: 26 * fem,
+                          ),
+                        ),
+                        Container(
+                          // body4XZg (0:928)
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                // ghU (0:929)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                child: Text(
+                                  '$totalPengunjung',
+                                  style: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 15 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2125 * ffem / fem,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                // newcustomerQ7g (0:930)
+                                'Total Pengunjung',
+                                style: SafeGoogleFont(
+                                  'Inter',
+                                  fontSize: 10 * ffem,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2125 * ffem / fem,
+                                  color: Color(0xffe7e7e7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-      // bottomNavigationBar: BottomNav(
-      //   currentIndex: 0,
-      //   onTabChanged: (index) {},
-      // ),
     );
   }
 

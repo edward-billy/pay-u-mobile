@@ -25,14 +25,13 @@ class HistoryDetail extends StatelessWidget {
         future: data,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (snapshot.hasData) {
             List<dynamic> historyData = snapshot.data!;
-
             // Calculate the total
             int total = historyData.fold(
                 0, (sum, item) => sum + int.parse(item['harga'].toString()));
@@ -45,28 +44,28 @@ class HistoryDetail extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Invoice ID: $invoiceId'),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Nama Customer: $nama'),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Nama Kasir: $name'),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   DataTable(
                     columns: const [
                       DataColumn(label: Text('No')),
@@ -91,21 +90,21 @@ class HistoryDetail extends StatelessWidget {
                       }),
                       DataRow(
                         cells: [
-                          DataCell(Text('Total',
+                          const DataCell(Text('Total',
                               style: TextStyle(fontWeight: FontWeight.bold))),
-                          DataCell(Text('')),
-                          DataCell(Text('')),
+                          const DataCell(Text('')),
+                          const DataCell(Text('')),
                           DataCell(Text(formattedTotal)),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
             );
           }
-          return Center(child: Text('No data available'));
+          return const Center(child: Text('No data available'));
         },
       ),
     );
