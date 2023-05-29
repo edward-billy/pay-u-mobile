@@ -125,7 +125,7 @@ class _ProdukScreenState extends State<ProdukScreen> {
 
     // print(body['data']['data']);
     if (body['data'] != null) {
-      return List<Map<String, dynamic>>.from(body['data']['data']);
+      return List<Map<String, dynamic>>.from(body['data']);
     }
     return []; // Return an empty list if there's an error or no data
   }
