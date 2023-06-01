@@ -132,7 +132,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       DataCell(Text(
                         NumberFormat.currency(
                           locale: 'id',
-                          symbol: 'Rp',
+                          symbol: 'Rp ',
                         ).format(historyData[index]['total']),
                       )),
                       DataCell(

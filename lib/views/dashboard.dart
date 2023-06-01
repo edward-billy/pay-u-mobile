@@ -6,6 +6,7 @@ import 'buttonnav.dart';
 import 'utils.dart';
 import 'home.dart';
 import 'login.dart';
+import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -38,6 +39,16 @@ class _DashboardScreen extends State<DashboardScreen> {
         print(body);
       });
     }
+  }
+
+  String formatCurrency(String value) {
+    final intValue = int.tryParse(value);
+    if (intValue != null) {
+      final formatCurrency =
+          NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+      return formatCurrency.format(intValue);
+    }
+    return '';
   }
 
   @override
@@ -140,7 +151,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                 child: Text(
-                                  'Rp. $totalPenjualanBulan',
+                                  formatCurrency(totalPenjualan),
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: 15 * ffem,
