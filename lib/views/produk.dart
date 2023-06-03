@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:payu/views/produkDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
-
-import 'home.dart';
 import 'login.dart';
 
 class ProdukScreen extends StatefulWidget {

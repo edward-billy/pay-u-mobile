@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:payu/views/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
+  final Function(String) onUpdateProfile;
+
+  const ProfileScreen({required this.onUpdateProfile});
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -100,6 +101,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> updateProfile(String newName, String newEmail) async {
     try {
       await Network().updateProfile(newName, newEmail, '/profile');
+      setState(() {
+        name = newName; // Memperbarui nilai name
+        email = newEmail; // Memperbarui nilai email
+      });
+      _showMsg("Profile updated successfully");
+      widget.onUpdateProfile(newName);
     } catch (error) {
       print('Terjadi kesalahan: $error');
     }

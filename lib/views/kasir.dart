@@ -6,16 +6,32 @@ import 'buttonnav.dart';
 import 'home.dart';
 import 'login.dart';
 
-class KasirScreen extends StatefulWidget {
+class KasirScreen extends StatelessWidget {
   const KasirScreen({super.key});
 
   @override
-  State<KasirScreen> createState() => KasirScreeneState();
-}
-
-class KasirScreeneState extends State<KasirScreen> {
-  @override
   Widget build(BuildContext context) {
-    return Container();
+    return ElevatedButton(
+      onPressed: () {
+        // Handle button press
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/images/123.jpg',
+            width: 24, // Adjust the width as needed
+            height: 24,
+            // Adjust the height as needed
+          ),
+          const SizedBox(
+              width: 8), // Adjust the spacing between the image and text
+          const Text(
+            '1',
+            style: TextStyle(fontSize: 16), // Adjust the font size as needed
+          ),
+        ],
+      ),
+    );
   }
 }

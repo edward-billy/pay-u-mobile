@@ -1,7 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:payu/views/dashboard.dart';
 import 'package:payu/views/history.dart';
@@ -33,11 +30,17 @@ class _HomeState extends State<Home> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var user = jsonDecode(localStorage.getString('user') ?? '');
 
-    if (user != null) {
-      setState(() {
-        name = user['name'];
-      });
-    }
+    // if (user != null) {
+    //   setState(() {
+    //     name = user['name'];
+    //   });
+    // }
+  }
+
+  void updateAppBarName(String newName) {
+    setState(() {
+      name = newName; // Mengubah nilai name
+    });
   }
 
   int currentPage = 0;
@@ -73,7 +76,9 @@ class _HomeState extends State<Home> {
           ProdukScreen(),
           KasirScreen(),
           HistoryScreen(),
-          ProfileScreen()
+          ProfileScreen(
+            onUpdateProfile: updateAppBarName,
+          )
         ],
       ),
       bottomNavigationBar: BottomNav(
