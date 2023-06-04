@@ -101,7 +101,11 @@ class _ProdukScreenState extends State<ProdukScreen> {
       localStorage.remove('token');
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Login(),
+        ),
+      );
     }
   }
 

@@ -125,12 +125,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           Text(historyData[index]['invoiceId'].toString())),
                       DataCell(Text(historyData[index]['name'].toString())),
                       DataCell(Text(historyData[index]['nama'].toString())),
-                      DataCell(Text(
-                        NumberFormat.currency(
-                          locale: 'id',
-                          symbol: 'Rp ',
-                        ).format(historyData[index]['total']),
-                      )),
+                      DataCell(
+                        Text(
+                          NumberFormat.currency(
+                            locale: 'id',
+                            symbol: 'Rp ',
+                          ).format(historyData[index]['total']),
+                        ),
+                      ),
                       DataCell(
                         ElevatedButton(
                           onPressed: () {

@@ -12,6 +12,8 @@ import 'kasir.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
@@ -23,18 +25,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
-  }
-
-  _loadUserData() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user') ?? '');
-
-    // if (user != null) {
-    //   setState(() {
-    //     name = user['name'];
-    //   });
-    // }
   }
 
   void updateAppBarName(String newName) {
@@ -53,7 +43,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _loadUserData();
     return Scaffold(
       backgroundColor: const Color(0xff151515),
       appBar: AppBar(
@@ -74,11 +63,11 @@ class _HomeState extends State<Home> {
         children: [
           DashboardScreen(),
           ProdukScreen(),
-          KasirScreen(),
+          const KasirScreen(),
           HistoryScreen(),
           ProfileScreen(
             onUpdateProfile: updateAppBarName,
-          )
+          ),
         ],
       ),
       bottomNavigationBar: BottomNav(
