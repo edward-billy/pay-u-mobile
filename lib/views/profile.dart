@@ -18,6 +18,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String updatedName = '';
   String updatedEmail = '';
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  // Set initial values to the controllers
+
   @override
   void initState() {
     super.initState();
@@ -30,8 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (user != null) {
       setState(() {
-        name = user['name'];
-        email = user['email'];
+        nameController.text = user['name'];
+        emailController.text = user['email'];
       });
     }
   }
@@ -59,6 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const SizedBox(height: 30),
                 TextField(
+                  controller: nameController,
                   onChanged: (value) {
                     setState(() {
                       updatedName = value;
@@ -66,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
                 TextField(
+                  controller: emailController,
                   onChanged: (value) {
                     setState(() {
                       updatedEmail = value;
