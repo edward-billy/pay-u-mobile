@@ -26,7 +26,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> data = await getHistoryData();
     setState(() {
       historyData = data;
-      print(historyData);
+      // print(historyData);
     });
   }
 

@@ -18,11 +18,11 @@ class _DashboardScreen extends State<DashboardScreen> {
     loadTotalPenjualan();
   }
 
-  var totalPenjualanBulan,
-      totalPenjualan,
-      currentPage,
-      totalProdukTerjual,
-      totalPengunjung;
+  var totalPenjualanBulan = '';
+  var totalPenjualan = '';
+  var currentPage;
+  var totalProdukTerjual = '';
+  var totalPengunjung = '';
 
   Future<void> loadTotalPenjualan() async {
     var res = await Network().getData('/dashboard');
@@ -30,11 +30,11 @@ class _DashboardScreen extends State<DashboardScreen> {
     if (res.statusCode == 200) {
       var body = json.decode(res.body);
       setState(() {
-        totalPenjualan = body['totalPenjualan'];
-        totalPenjualanBulan = body['totalPenjualanBulan'];
-        totalProdukTerjual = body['totalProdukTerjual'];
-        totalPengunjung = body['totalPengunjung'];
-        print(body);
+        totalPenjualan = body['totalPenjualan']?.toString() ?? '';
+        totalPenjualanBulan = body['totalPenjualanBulan']?.toString() ?? '';
+        totalProdukTerjual = body['totalProdukTerjual']?.toString() ?? '';
+        totalPengunjung = body['totalPengunjung']?.toString() ?? '';
+        // print(body);
       });
     }
   }
@@ -219,7 +219,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                 child: Text(
-                                  formatCurrency(totalPenjualan),
+                                  formatCurrency(totalPenjualanBulan),
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: 15 * ffem,

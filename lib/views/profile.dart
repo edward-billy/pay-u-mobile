@@ -90,6 +90,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        if (updatedName == '') {
+                          updatedName = nameController.text;
+                        }
+                        print("email: $email");
+                        if (updatedEmail == '') {
+                          updatedEmail = emailController.text;
+                        }
                         updateProfile(updatedName, updatedEmail);
                       },
                       child: const Text("UPDATE",
@@ -107,16 +114,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> updateProfile(String newName, String newEmail) async {
+    print(newName);
+
     try {
       await Network().updateProfile(newName, newEmail, '/profile');
       setState(() {
-        name = newName; // Memperbarui nilai name
-        email = newEmail; // Memperbarui nilai email
+        name = newName; // Update the local name variable
+        email = newEmail; // Update the local email variable
       });
+
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var user = jsonDecode(localStorage.getString('user') ?? '');
+
+      if (user != null) {
+        var updatedUser = {
+          ...user,
+          'name': newName,
+          'email': newEmail,
+        };
+
+        localStorage.setString('user', jsonEncode(updatedUser));
+      }
+
       _showMsg("Profile updated successfully");
       widget.onUpdateProfile(newName);
     } catch (error) {
-      print('Terjadi kesalahan: $error');
+      print('An error occurred: $error');
     }
   }
+
+  // Future<void> updateProfile(String newName, String newEmail) async {
+  //   print(newName);
+  //   try {
+  //     await Network().updateProfile(newName, newEmail, '/profile');
+  //     setState(() {
+  //       name = newName; // Memperbarui nilai name
+  //       email = newEmail; // Memperbarui nilai email
+  //     });
+  //     _showMsg("Profile updated successfully");
+  //     widget.onUpdateProfile(newName);
+  //   } catch (error) {
+  //     print('Terjadi kesalahan: $error');
+  //   }
+  // }
 }

@@ -26,7 +26,7 @@ class Network {
     await _getToken();
     var headers = _setHeaders();
     var body = json.encode({'name': newName, 'email': newEmail});
-
+    print(body);
     var response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
