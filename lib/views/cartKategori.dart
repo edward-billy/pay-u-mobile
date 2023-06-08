@@ -1,12 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../app/api.dart';
+import 'package:intl/intl.dart';
 
 class cartKategoriScreen extends StatefulWidget {
+  final Future<List<dynamic>> data;
+
   const cartKategoriScreen({
-    super.key,
-    required Future<List> data,
-  });
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<cartKategoriScreen> createState() => _cartKategoriScreenState();
@@ -14,30 +15,34 @@ class cartKategoriScreen extends StatefulWidget {
 
 class _cartKategoriScreenState extends State<cartKategoriScreen> {
   List<Map<String, dynamic>> produkData = [];
+  List<int> quantities = [];
+  List<TextEditingController> quantityControllers = [];
 
   @override
   void initState() {
     super.initState();
-    // loadProdukData();
+    loadProdukData();
   }
 
-  // Future<void> loadProdukData() async {
-  //   List<Map<String, dynamic>> data = await widget.data;
-  //   setState(() {
-  //     produkData = data;
-  //     print(produkData);
-  //   });
-  // }
+  Future<void> loadProdukData() async {
+    List<dynamic> data = await widget.data;
+    setState(() {
+      produkData = List<Map<String, dynamic>>.from(data);
+      quantities = List<int>.filled(data.length, 1);
+      quantityControllers = List<TextEditingController>.generate(
+        data.length,
+        (index) => TextEditingController(text: '1'),
+      );
+      // print(produkData);
+    });
+  }
 
-  Future<List<Map<String, dynamic>>> getProdukData(int kategori) async {
-    var res = await Network().getData('cashier/kategori/$kategori');
-    var body = json.decode(res.body);
-
-    // print(body['data']['data']);
-    if (body['data'] != null) {
-      return List<Map<String, dynamic>>.from(body['data']['data']);
+  @override
+  void dispose() {
+    for (var controller in quantityControllers) {
+      controller.dispose();
     }
-    return []; // Return an empty list if there's an error or no data
+    super.dispose();
   }
 
   @override
@@ -45,6 +50,7 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
     double baseWidth = 1194;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart Product"),
@@ -59,10 +65,94 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
         ),
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('dd'),
-            )
+            SizedBox(height: 16 * fem),
+            Row(
+              children: [
+                for (int index = 0; index < produkData.length; index++)
+                  Expanded(
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0 * fem),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nama Barang: ${produkData[index]['nama']}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16 * fem,
+                              ),
+                            ),
+                            SizedBox(height: 8 * fem),
+                            Text(
+                              'Harga: ${NumberFormat.currency(locale: 'id', symbol: 'Rp').format(double.parse(produkData[index]['harga'] ?? '0'))}',
+                              style: TextStyle(fontSize: 14 * fem),
+                            ),
+                            SizedBox(height: 8 * fem),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (quantities[index] > 1) {
+                                        quantities[index]--;
+                                        quantityControllers[index].text =
+                                            quantities[index].toString();
+                                      }
+                                    });
+                                  },
+                                  icon: Icon(Icons.remove),
+                                ),
+                                SizedBox(width: 8 * fem),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: quantityControllers[index],
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        quantities[index] =
+                                            int.tryParse(value) ?? 1;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Jumlah',
+                                      labelStyle: TextStyle(fontSize: 14 * fem),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8 * fem),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      quantities[index]++;
+                                      quantityControllers[index].text =
+                                          quantities[index].toString();
+                                    });
+                                  },
+                                  icon: Icon(Icons.add),
+                                ),
+                                SizedBox(width: 8 * fem),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Add to cart logic
+                                    print(
+                                        "${produkData[index]['nama']} sejumlah ${quantities[index]} ditambah");
+                                  },
+                                  child: Text(
+                                    'Add to Cart',
+                                    style: TextStyle(fontSize: 14 * fem),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ],
         ),
       ),

@@ -252,9 +252,10 @@ class KasirScreen extends StatelessWidget {
   }
 
   Future<List> getData(int kategori) async {
-    var res = await Network().getData("cashier/kategori/$kategori");
+    var res = await Network().getData("/cashier/kategori/$kategori");
     var body = json.decode(res.body);
     if (body['data'] != null) {
+      // print(body['data']);
       return List<dynamic>.from(body['data']);
     }
     return [];
