@@ -219,7 +219,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                 child: Text(
-                                  '$totalPenjualanBulan',
+                                  formatCurrency(totalPenjualan),
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: 15 * ffem,

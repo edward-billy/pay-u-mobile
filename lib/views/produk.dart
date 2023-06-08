@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:payu/views/produkDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
@@ -23,7 +24,7 @@ class _ProdukScreenState extends State<ProdukScreen> {
     List<Map<String, dynamic>> data = await getProdukData();
     setState(() {
       produkData = data;
-      print(produkData);
+      // print(produkData);
     });
   }
 
@@ -55,7 +56,13 @@ class _ProdukScreenState extends State<ProdukScreen> {
                   DataCell(Text(produkData[index]['deskripsi'].toString())),
                   DataCell(Text(produkData[index]['stok'].toString())),
                   DataCell(
-                      Text('Rp. ${produkData[index]['harga'].toString()}-')),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'Rp ',
+                      ).format(double.parse(produkData[index]['harga'] ?? '0')),
+                    ),
+                  ),
                   DataCell(
                     ElevatedButton(
                       onPressed: () {
