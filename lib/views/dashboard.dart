@@ -405,6 +405,7 @@ class _DashboardScreen extends State<DashboardScreen> {
 
       localStorage.remove('user');
       localStorage.remove('token');
+
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Login()));

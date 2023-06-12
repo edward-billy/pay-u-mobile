@@ -2,21 +2,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class Network {
-  static String _url = 'http://172.16.100.190:8000/api';
+  static String _url = 'http://192.168.0.102:8000/api';
   dynamic token;
-
-  _getToken() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var tokenString = localStorage.getString('token');
-    token = tokenString != null ? jsonDecode(tokenString)['token'] : '';
-  }
+  // dynamic cookieManager;
 
   auth(data, apiURL) async {
     var fullUrl = Uri.parse(_url + apiURL);
-    print(fullUrl);
-    print(data);
     return await http.post(fullUrl,
         body: jsonEncode(data), headers: _setHeaders());
   }
@@ -26,7 +20,6 @@ class Network {
     await _getToken();
     var headers = _setHeaders();
     var body = json.encode({'name': newName, 'email': newEmail});
-    print(body);
     var response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
@@ -40,11 +33,29 @@ class Network {
   getData(apiURL) async {
     var fullUrl = Uri.parse(_url + apiURL);
     await _getToken();
-    print(fullUrl);
+
     return await http.get(
       fullUrl,
       headers: _setHeaders(),
     );
+  }
+
+  postData(data, apiURL) async {
+    var fullUrl = Uri.parse(_url + apiURL);
+    await _getToken();
+    print(fullUrl);
+
+    return await http.post(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
+  _getToken() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var tokenString = localStorage.getString('token');
+    token = tokenString != null ? jsonDecode(tokenString)['token'] : '';
   }
 
   _setHeaders() => {
