@@ -33,6 +33,9 @@ class cartScreeneState extends State<cartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Cart"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
@@ -52,8 +55,8 @@ class cartScreeneState extends State<cartScreen> {
                   cells: [
                     DataCell(Text((index + 1).toString())),
                     DataCell(Text(item['nama'].toString())),
-                    DataCell(Text(item['harga'].toString())),
                     DataCell(Text(item['jumlah'].toString())),
+                    DataCell(Text(item['harga'].toString())),
                   ],
                 );
               },
@@ -61,71 +64,8 @@ class cartScreeneState extends State<cartScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNav(
-      //   currentIndex: 2,
-      //   onTabChanged: (index) {},
-      // ),
     );
   }
-
-  // Future<List<Map<String, dynamic>>> getProdukData1() async {
-  //   var res = await Network().getData('/cashier/cart');
-  //   var body = json.decode(res.body);
-
-  //   List<Map<String, dynamic>> data = [];
-  //   if (body['data'] != null) {
-  //     print(body);
-  //     body['data'].forEach((key, value) {
-  //       Map<String, dynamic> entry = {
-  //         'id': int.parse(key),
-  //         'nama': value['nama'],
-  //         'harga': value['harga'],
-  //         'jumlah': value['jumlah'],
-  //       };
-  //       data.add(entry);
-  //     });
-  //   }
-  //   return data;
-
-  //   var res = await Network().getData('/cashier/cart');
-  //   var body = json.decode(res.body);
-
-  //   List<Map<String, dynamic>> data = [];
-  //   if (body['data'] != null) {
-  //     print(body);
-  //     body['data'].forEach((key, value) {
-  //       Map<String, dynamic> entry = {
-  //         'id': int.parse(key),
-  //         'nama': value['nama'],
-  //         'harga': value['harga'],
-  //         'jumlah': value['jumlah'],
-  //       };
-  //       data.add(entry);
-  //     });
-  //   }
-
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //   final currentCartCookie = localStorage.getString('cart');
-  //   print(currentCartCookie); // Menampilkan nilai currentCartCookie
-
-  //   if (currentCartCookie != null) {
-  //     var cookieData = currentCartCookie.split(';');
-  //     for (var cookie in cookieData) {
-  //       var cookieValues = cookie.split('=');
-  //       if (cookieValues.length == 2) {
-  //         var key = cookieValues[0].trim();
-  //         var value = cookieValues[1].trim();
-  //         Map<String, dynamic> entry = {
-  //           'id': int.parse(key),
-  //           'jumlah': int.parse(value),
-  //         };
-  //         data.add(entry);
-  //       }
-  //     }
-  //   }
-
-  //   return data;
-  // }
 
   Future<List<Map<String, dynamic>>> getProdukData() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -146,24 +86,36 @@ class cartScreeneState extends State<cartScreen> {
       List<Map<String, dynamic>> decodedCartData = [];
       var user = jsonDecode(localStorage.getString('user') ?? '');
       int id = user['id'];
-      print(id);
       for (String cookie in jsonArray) {
         Map<String, dynamic> data = json.decode(cookie);
         final int key = int.parse(data.keys.first);
         final Map<String, dynamic> value = data.values.first;
         final int idUser = value['iduser'];
         if (idUser == id) {
-          Map<String, dynamic> entry = {
-            'id': key,
-            'nama': value['nama'],
-            'harga': value['harga'],
-            'jumlah': value['jumlah'],
-            'iduser': value['iduser']
-          };
-          decodedCartData.add(entry);
+          bool isProductExist = false;
+
+          for (Map<String, dynamic> entry in decodedCartData) {
+            if (entry['id'] == key) {
+              entry['jumlah'] += value['jumlah'];
+              isProductExist = true;
+              break;
+            }
+          }
+
+          if (!isProductExist) {
+            Map<String, dynamic> entry = {
+              'id': key,
+              'nama': value['nama'],
+              'harga': value['harga'],
+              'jumlah': value['jumlah'],
+              'iduser': value['iduser']
+            };
+            decodedCartData.add(entry);
+          }
         }
       }
       cartData = decodedCartData;
+
       return cartData;
     } catch (e) {
       print('Error decoding cart cookie: $e');
