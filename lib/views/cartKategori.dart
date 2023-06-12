@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:payu/views/cartScreen.dart';
+import 'package:provider/provider.dart';
+
+import '../app/DBHelper.dart';
+import '../app/api.dart';
+import '../app/cart.dart';
+import '../app/cartProvider.dart';
 
 class cartKategoriScreen extends StatefulWidget {
   final Future<List<dynamic>> data;
@@ -136,8 +143,10 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
                                 ElevatedButton(
                                   onPressed: () {
                                     // Add to cart logic
+
                                     print(
                                         "${produkData[index]['nama']} sejumlah ${quantities[index]} ditambah");
+                                    saveData(index);
                                   },
                                   child: Text(
                                     'Add to Cart',
@@ -157,5 +166,37 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
         ),
       ),
     );
+  }
+
+  final cart = CartProvider();
+  final dbHelper = DBHelper();
+  void saveData(int index) {
+    dbHelper.getCartList();
+    dbHelper
+        .insert(
+      Cart(
+        id: 123,
+        productId: index.toString(),
+        productName: produkData[index]['nama'],
+        productPrice: int.parse(produkData[index]['harga']),
+        quantity: ValueNotifier<int>(quantities[index].toInt()),
+        kategori: produkData[index]['kategori']['nama'],
+        image: produkData[index]['kategori']['nama'],
+      ),
+    )
+        .then((value) {
+      cart.addTotalPrice(produkData[index]['harga'].toDouble());
+      cart.addCounter();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CartScreen(),
+        ),
+      );
+      print('Product Added to cart');
+    }).onError((error, stackTrace) {
+      // print(error.toString());
+      print("error weh");
+    });
   }
 }
