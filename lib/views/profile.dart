@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:payu/views/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
+  final Function(String) onUpdateProfile;
+
+  const ProfileScreen({required this.onUpdateProfile});
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -17,6 +18,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String updatedName = '';
   String updatedEmail = '';
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  // Set initial values to the controllers
+
   @override
   void initState() {
     super.initState();
@@ -29,8 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (user != null) {
       setState(() {
-        name = user['name'];
-        email = user['email'];
+        nameController.text = user['name'];
+        emailController.text = user['email'];
       });
     }
   }
@@ -58,6 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const SizedBox(height: 30),
                 TextField(
+                  controller: nameController,
                   onChanged: (value) {
                     setState(() {
                       updatedName = value;
@@ -65,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
                 TextField(
+                  controller: emailController,
                   onChanged: (value) {
                     setState(() {
                       updatedEmail = value;
@@ -81,6 +90,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        if (updatedName == '') {
+                          updatedName = nameController.text;
+                        }
+                        print("email: $email");
+                        if (updatedEmail == '') {
+                          updatedEmail = emailController.text;
+                        }
                         updateProfile(updatedName, updatedEmail);
                       },
                       child: const Text("UPDATE",
@@ -98,10 +114,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> updateProfile(String newName, String newEmail) async {
+    print(newName);
+
     try {
       await Network().updateProfile(newName, newEmail, '/profile');
+      setState(() {
+        name = newName; // Update the local name variable
+        email = newEmail; // Update the local email variable
+      });
+
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var user = jsonDecode(localStorage.getString('user') ?? '');
+
+      if (user != null) {
+        var updatedUser = {
+          ...user,
+          'name': newName,
+          'email': newEmail,
+        };
+
+        localStorage.setString('user', jsonEncode(updatedUser));
+      }
+
+      _showMsg("Profile updated successfully");
+      widget.onUpdateProfile(newName);
     } catch (error) {
-      print('Terjadi kesalahan: $error');
+      print('An error occurred: $error');
     }
   }
+
+  // Future<void> updateProfile(String newName, String newEmail) async {
+  //   print(newName);
+  //   try {
+  //     await Network().updateProfile(newName, newEmail, '/profile');
+  //     setState(() {
+  //       name = newName; // Memperbarui nilai name
+  //       email = newEmail; // Memperbarui nilai email
+  //     });
+  //     _showMsg("Profile updated successfully");
+  //     widget.onUpdateProfile(newName);
+  //   } catch (error) {
+  //     print('Terjadi kesalahan: $error');
+  //   }
+  // }
 }

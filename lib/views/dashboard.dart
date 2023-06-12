@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
 import 'utils.dart';
-import 'home.dart';
 import 'login.dart';
+import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -19,11 +18,11 @@ class _DashboardScreen extends State<DashboardScreen> {
     loadTotalPenjualan();
   }
 
-  var totalPenjualanBulan,
-      totalPenjualan,
-      currentPage,
-      totalProdukTerjual,
-      totalPengunjung;
+  var totalPenjualanBulan = '';
+  var totalPenjualan = '';
+  var currentPage;
+  var totalProdukTerjual = '';
+  var totalPengunjung = '';
 
   Future<void> loadTotalPenjualan() async {
     var res = await Network().getData('/dashboard');
@@ -31,13 +30,23 @@ class _DashboardScreen extends State<DashboardScreen> {
     if (res.statusCode == 200) {
       var body = json.decode(res.body);
       setState(() {
-        totalPenjualan = body['totalPenjualan'];
-        totalPenjualanBulan = body['totalPenjualanBulan'];
-        totalProdukTerjual = body['totalProdukTerjual'];
-        totalPengunjung = body['totalPengunjung'];
-        print(body);
+        totalPenjualan = body['totalPenjualan']?.toString() ?? '';
+        totalPenjualanBulan = body['totalPenjualanBulan']?.toString() ?? '';
+        totalProdukTerjual = body['totalProdukTerjual']?.toString() ?? '';
+        totalPengunjung = body['totalPengunjung']?.toString() ?? '';
+        // print(body);
       });
     }
+  }
+
+  String formatCurrency(String value) {
+    final intValue = int.tryParse(value);
+    if (intValue != null) {
+      final formatCurrency =
+          NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+      return formatCurrency.format(intValue);
+    }
+    return '';
   }
 
   @override
@@ -46,7 +55,6 @@ class _DashboardScreen extends State<DashboardScreen> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Container(
-      // todayssalesVCS (0:883)
       margin: EdgeInsets.fromLTRB(39 * fem, 0 * fem, 26 * fem, 53 * fem),
       padding: EdgeInsets.fromLTRB(28.81 * fem, 19 * fem, 28 * fem, 20 * fem),
       width: double.infinity,
@@ -140,7 +148,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                 child: Text(
-                                  'Rp. $totalPenjualanBulan',
+                                  formatCurrency(totalPenjualan),
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: 15 * ffem,
@@ -211,7 +219,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                 child: Text(
-                                  '$totalPenjualanBulan',
+                                  formatCurrency(totalPenjualanBulan),
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: 15 * ffem,
@@ -229,7 +237,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                   fontSize: 10 * ffem,
                                   fontWeight: FontWeight.w500,
                                   height: 1.2125 * ffem / fem,
-                                  color: Color(0xffe7e7e7),
+                                  color: const Color(0xffe7e7e7),
                                 ),
                               ),
                             ],
@@ -288,7 +296,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                     fontSize: 15 * ffem,
                                     fontWeight: FontWeight.w600,
                                     height: 1.2125 * ffem / fem,
-                                    color: Color(0xffffffff),
+                                    color: const Color(0xffffffff),
                                   ),
                                 ),
                               ),
@@ -300,7 +308,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                   fontSize: 10 * ffem,
                                   fontWeight: FontWeight.w500,
                                   height: 1.2125 * ffem / fem,
-                                  color: Color(0xffe7e7e7),
+                                  color: const Color(0xffe7e7e7),
                                 ),
                               ),
                             ],
@@ -397,6 +405,7 @@ class _DashboardScreen extends State<DashboardScreen> {
 
       localStorage.remove('user');
       localStorage.remove('token');
+
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Login()));

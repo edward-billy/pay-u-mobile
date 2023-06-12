@@ -1,7 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:payu/views/dashboard.dart';
 import 'package:payu/views/history.dart';
@@ -40,6 +37,12 @@ class _HomeState extends State<Home> {
     }
   }
 
+  void updateAppBarName(String newName) {
+    setState(() {
+      name = newName; // Mengubah nilai name
+    });
+  }
+
   int currentPage = 0;
 
   void onTabChanged(int index) {
@@ -50,7 +53,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _loadUserData();
+    // _loadUserData();
     return Scaffold(
       backgroundColor: const Color(0xff151515),
       appBar: AppBar(
@@ -73,7 +76,9 @@ class _HomeState extends State<Home> {
           ProdukScreen(),
           KasirScreen(),
           HistoryScreen(),
-          ProfileScreen()
+          ProfileScreen(
+            onUpdateProfile: updateAppBarName,
+          )
         ],
       ),
       bottomNavigationBar: BottomNav(

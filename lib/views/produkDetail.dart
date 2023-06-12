@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProdukDetail extends StatelessWidget {
   final int id;
@@ -37,7 +38,12 @@ class ProdukDetail extends StatelessWidget {
             _buildTableRow('Kategori', kategori),
             _buildTableRow('Deskripsi', deskripsi),
             _buildTableRow('Stok', stok),
-            _buildTableRow('Harga', 'Rp. $harga'),
+            _buildTableRow(
+                'Harga',
+                NumberFormat.currency(
+                  locale: 'id',
+                  symbol: 'Rp ',
+                ).format(double.parse(harga) ?? '0')),
           ],
         ),
       ),
@@ -51,14 +57,14 @@ class ProdukDetail extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             value,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       ],

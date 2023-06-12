@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:payu/views/produkDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
-
-import 'home.dart';
 import 'login.dart';
 
 class ProdukScreen extends StatefulWidget {
@@ -26,7 +24,7 @@ class _ProdukScreenState extends State<ProdukScreen> {
     List<Map<String, dynamic>> data = await getProdukData();
     setState(() {
       produkData = data;
-      print(produkData);
+      // print(produkData);
     });
   }
 
@@ -58,7 +56,13 @@ class _ProdukScreenState extends State<ProdukScreen> {
                   DataCell(Text(produkData[index]['deskripsi'].toString())),
                   DataCell(Text(produkData[index]['stok'].toString())),
                   DataCell(
-                      Text('Rp. ${produkData[index]['harga'].toString()}-')),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'Rp ',
+                      ).format(double.parse(produkData[index]['harga'] ?? '0')),
+                    ),
+                  ),
                   DataCell(
                     ElevatedButton(
                       onPressed: () {
@@ -104,7 +108,11 @@ class _ProdukScreenState extends State<ProdukScreen> {
       localStorage.remove('token');
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Login(),
+        ),
+      );
     }
   }
 

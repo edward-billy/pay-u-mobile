@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:payu/app/api.dart';
-import 'buttonnav.dart';
-
-import 'home.dart';
-import 'login.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
@@ -30,7 +26,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Map<String, dynamic>> data = await getHistoryData();
     setState(() {
       historyData = data;
-      print(historyData);
+      // print(historyData);
     });
   }
 
@@ -129,12 +125,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           Text(historyData[index]['invoiceId'].toString())),
                       DataCell(Text(historyData[index]['name'].toString())),
                       DataCell(Text(historyData[index]['nama'].toString())),
-                      DataCell(Text(
-                        NumberFormat.currency(
-                          locale: 'id',
-                          symbol: 'Rp',
-                        ).format(historyData[index]['total']),
-                      )),
+                      DataCell(
+                        Text(
+                          NumberFormat.currency(
+                            locale: 'id',
+                            symbol: 'Rp ',
+                          ).format(historyData[index]['total']),
+                        ),
+                      ),
                       DataCell(
                         ElevatedButton(
                           onPressed: () {

@@ -181,6 +181,7 @@ class _LoginState extends State<Login> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
+      print(body['token']);
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
