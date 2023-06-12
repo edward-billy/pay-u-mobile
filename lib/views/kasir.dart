@@ -17,6 +17,27 @@ class KasirScreen extends StatefulWidget {
 class KasirScreeneState extends State<KasirScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(16.0),
+          columns: const [
+            DataColumn(label: Text('No')),
+            DataColumn(label: Text('Nama Produk')),
+            DataColumn(label: Text('Kategori')),
+            DataColumn(label: Text('Deskripsi')),
+            DataColumn(label: Text('Stok')),
+            DataColumn(label: Text('Harga')),
+            DataColumn(label: Text('Action')),
+          ],
+          ),
+        ),
+      ),
+      // bottomNavigationBar: BottomNav(
+      //   currentIndex: 2,
+      //   onTabChanged: (index) {},
+      // ),
+    );
   }
 }

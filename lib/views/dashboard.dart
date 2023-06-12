@@ -173,8 +173,8 @@ class _DashboardScreen extends State<DashboardScreen> {
                 ),
                 Container(
                   // card2g5t (0:900)
-                  padding: EdgeInsets.fromLTRB(
-                      30.96 * fem, 11 * fem, 30.96 * fem, 22 * fem),
+                  padding: EdgeInsets .fromLTRB(
+                      30.96 * fem, 11 * fem, 30.96 * fem,22 * fem),
                   width: 230 * fem,
                   height: double.infinity,
                   decoration: BoxDecoration(
