@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../app/api.dart';
 
 class cartScreen extends StatefulWidget {
-  const cartScreen({super.key});
+  const cartScreen({Key? key});
 
   @override
   State<cartScreen> createState() => cartScreeneState();
@@ -15,7 +15,7 @@ class cartScreen extends StatefulWidget {
 
 class cartScreeneState extends State<cartScreen> {
   List<Map<String, dynamic>> cartData = [];
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -30,9 +30,70 @@ class cartScreeneState extends State<cartScreen> {
     });
   }
 
+  Future<void> showCustomerDataDialog() async {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController namaController = TextEditingController();
+    final TextEditingController noHpController = TextEditingController();
+    final TextEditingController alamatController = TextEditingController();
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Customer Data'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+              TextField(
+                controller: namaController,
+                decoration: const InputDecoration(labelText: 'Nama'),
+              ),
+              TextField(
+                controller: noHpController,
+                decoration: const InputDecoration(labelText: 'No HP'),
+              ),
+              TextField(
+                controller: alamatController,
+                decoration: const InputDecoration(labelText: 'Alamat'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Handle the submitted customer data
+                final customerData = {
+                  'email': emailController.text,
+                  'nama': namaController.text,
+                  'noHp': noHpController.text,
+                  'alamat': alamatController.text,
+                };
+                // Process the customer data here
+                // ...
+                checkout(customerData);
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text("Cart"),
       ),
@@ -64,13 +125,19 @@ class cartScreeneState extends State<cartScreen> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showCustomerDataDialog();
+        },
+        child: const Icon(Icons.shopping_cart),
+      ),
     );
   }
 
   Future<List<Map<String, dynamic>>> getProdukData() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String? cartCookie = localStorage.getString('cart');
-    print(cartCookie);
+    // print(cartCookie);
     String jsonString = '''$cartCookie''';
 
     List jsonArray = jsonString
@@ -79,8 +146,8 @@ class cartScreeneState extends State<cartScreen> {
         .toList()
         .cast<String>();
 
-    print(jsonArray);
-    print("===================");
+    // print(jsonArray);
+    // print("===================");
 
     try {
       List<Map<String, dynamic>> decodedCartData = [];
@@ -122,5 +189,46 @@ class cartScreeneState extends State<cartScreen> {
     }
 
     return [];
+  }
+
+  void checkout(customerData) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var nama = customerData['nama'];
+    var email = customerData['email'];
+    var alamat = customerData['alamat'];
+    var noHp = customerData['noHp'];
+    var cart = jsonEncode(getProdukData());
+
+    print(cart);
+
+    var data = {
+      'nama': nama,
+      'email': email,
+      'alamat': alamat,
+      'noHp': noHp,
+      'cart': cart
+    };
+
+    var res = await Network().postData(data, '/cashier/transaksi');
+    print(data);
+    var body = json.decode(res.body);
+    if (body['message'] == 'Transaction successful') {
+      // Navigator.pop(context);
+      print("ini cartnya");
+      print(body['cart']);
+      _showMsg(body['message']);
+    } else {
+      _showMsg(body['message']);
+      print(body['message']);
+    }
+  }
+
+  _showMsg(msg) {
+    final snackBar = SnackBar(
+      content: Text(msg),
+    );
+    if (_scaffoldKey.currentState != null) {
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
+    }
   }
 }
