@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class Network {
   static String _url = 'http://192.168.0.102:8000/api';
