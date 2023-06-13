@@ -24,10 +24,18 @@ class cartScreeneState extends State<cartScreen> {
 
   Future<void> loadProdukData() async {
     List<Map<String, dynamic>> data = await getProdukData();
+
     setState(() {
       cartData = data;
       print(cartData);
     });
+  }
+
+  void removeItem(int index) {
+    setState(() {
+      cartData.removeAt(index);
+    });
+    print(cartData);
   }
 
   @override
@@ -46,6 +54,7 @@ class cartScreeneState extends State<cartScreen> {
               DataColumn(label: Text('Nama Produk')),
               DataColumn(label: Text('Kuantitas')),
               DataColumn(label: Text('Harga')),
+              DataColumn(label: Text('Action')),
             ],
             rows: List.generate(
               cartData.length,
@@ -57,6 +66,11 @@ class cartScreeneState extends State<cartScreen> {
                     DataCell(Text(item['nama'].toString())),
                     DataCell(Text(item['jumlah'].toString())),
                     DataCell(Text(item['harga'].toString())),
+                    DataCell(ElevatedButton(
+                        onPressed: () {
+                          removeItem(index);
+                        },
+                        child: const Icon(Icons.delete))),
                   ],
                 );
               },
