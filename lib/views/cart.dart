@@ -107,6 +107,7 @@ class cartScreeneState extends State<cartScreen> {
               DataColumn(label: Text('Nama Produk')),
               DataColumn(label: Text('Kuantitas')),
               DataColumn(label: Text('Harga')),
+              DataColumn(label: Text('Action')),
             ],
             rows: List.generate(
               cartData.length,
@@ -118,6 +119,11 @@ class cartScreeneState extends State<cartScreen> {
                     DataCell(Text(item['nama'].toString())),
                     DataCell(Text(item['jumlah'].toString())),
                     DataCell(Text(item['harga'].toString())),
+                    DataCell(ElevatedButton(
+                        onPressed: () {
+                          removeItem(index);
+                        },
+                        child: const Icon(Icons.delete))),
                   ],
                 );
               },
@@ -191,13 +197,27 @@ class cartScreeneState extends State<cartScreen> {
     return [];
   }
 
+  void removeItem(int index) {
+    setState(() {
+      cartData.removeAt(index);
+    });
+    print(cartData);
+  }
+
   void checkout(customerData) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String? cartCookie = localStorage.getString('cart');
+    // print(cartCookie);
+    String jsonString = '''$cartCookie''';
+
+    List jsonArray =
+        jsonString.split(';').map((item) => jsonDecode(item)).toList();
+
     var nama = customerData['nama'];
     var email = customerData['email'];
     var alamat = customerData['alamat'];
     var noHp = customerData['noHp'];
-    var cart = jsonEncode(getProdukData());
+    var cart = jsonEncode(jsonArray);
 
     print(cart);
 
