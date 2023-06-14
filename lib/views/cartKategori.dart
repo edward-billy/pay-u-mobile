@@ -210,7 +210,7 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
           MaterialPageRoute(builder: (context) => const cartScreen()),
         );
       } else {
-        print('Gagal menambahkan produk ke cart');
+        print("Stok Habis");
       }
     } catch (e) {
       print('Terjadi kesalahan: $e');

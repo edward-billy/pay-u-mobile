@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../app/api.dart';
 import 'home.dart';
 
@@ -18,8 +16,8 @@ class cartScreeneState extends State<cartScreen> {
   List<Map<String, dynamic>> cartData = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     loadProdukData();
   }
 
@@ -48,6 +46,7 @@ class cartScreeneState extends State<cartScreen> {
     setState(() {
       cartData.removeAt(index);
     });
+
     print(cartData);
   }
 
