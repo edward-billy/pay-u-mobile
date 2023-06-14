@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:payu/views/cart.dart';
 import 'package:payu/views/produkdetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:payu/app/api.dart';
@@ -91,10 +92,17 @@ class _ProdukScreenState extends State<ProdukScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNav(
-      //   currentIndex: 2,
-      //   onTabChanged: (index) {},
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    const cartScreen()), // Ganti NewPage dengan halaman baru yang ingin Anda tuju
+          );
+        },
+        child: const Icon(Icons.shopping_cart),
+      ),
     );
   }
 
@@ -135,6 +143,7 @@ class _ProdukScreenState extends State<ProdukScreen> {
     if (body['data'] != null) {
       return List<Map<String, dynamic>>.from(body['data']);
     }
+
     return []; // Return an empty list if there's an error or no data
   }
 }

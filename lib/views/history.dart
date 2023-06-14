@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
 
+import 'cart.dart';
 import 'historyDetail.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -164,6 +165,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    const cartScreen()), // Ganti NewPage dengan halaman baru yang ingin Anda tuju
+          );
+        },
+        child: const Icon(Icons.shopping_cart),
       ),
     );
   }
