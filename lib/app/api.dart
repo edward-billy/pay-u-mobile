@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class Network {
-  static String _url = 'http://192.168.0.100:8000/api';
+  static String _url = 'http://192.168.0.10:8000/api';
   dynamic token;
   // dynamic cookieManager;
 
