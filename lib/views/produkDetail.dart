@@ -26,48 +26,111 @@ class ProdukDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detail Produk'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Table(
-          columnWidths: {
-            0: FlexColumnWidth(0.4), // Kolom pertama mengambil 40% lebar
-            1: FlexColumnWidth(0.6), // Kolom kedua mengambil 60% lebar
-          },
-          children: [
-            _buildTableRow('Nama Produk', nama),
-            _buildTableRow('Kategori', kategori),
-            _buildTableRow('Deskripsi', deskripsi),
-            _buildTableRow('Stok', stok),
-            _buildTableRow(
-                'Harga',
-                NumberFormat.currency(
-                  locale: 'id',
-                  symbol: 'Rp ',
-                ).format(double.parse(harga) ?? '0')),
-          ],
+      body: Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.6,
+          heightFactor: 0.6,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 240, 236, 236),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(2),
+                color: Color.fromARGB(255, 64, 64, 64)),
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: [
+                    Text(
+                      'Detail Produk',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 5
+                          ..color = Color.fromARGB(255, 44, 46, 48),
+                      ),
+                    ),
+                    Text(
+                      'Detail Produk',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 231, 233, 235),
+                        fontSize: 30,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                    height: 30), // Add spacing between the Stack and the rows
+                Row(
+                  children: [
+                    SizedBox(width: 40),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text('Nama Produk'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text('Kategori'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text('Deskripsi'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text('Stok'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text('Harga'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(nama),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(kategori),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(deskripsi),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(stok),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(harga),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 30)
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-    );
-  }
-
-  TableRow _buildTableRow(String title, String value) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            value,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-      ],
     );
   }
 }
