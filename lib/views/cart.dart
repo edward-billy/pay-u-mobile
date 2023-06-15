@@ -106,7 +106,7 @@ class cartScreeneState extends State<cartScreen> {
                                 (index + 1).toString(),
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -115,7 +115,7 @@ class cartScreeneState extends State<cartScreen> {
                                 item['nama'].toString(),
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -124,16 +124,18 @@ class cartScreeneState extends State<cartScreen> {
                                 item['jumlah'].toString(),
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                             DataCell(
                               Text(
-                                item['harga'].toString(),
+                                NumberFormat.currency(
+                                        locale: 'id', symbol: 'Rp ')
+                                    .format(double.parse(item['harga'] ?? '0')),
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -158,7 +160,7 @@ class cartScreeneState extends State<cartScreen> {
                     ),
                   ),
                   Text(
-                    NumberFormat.currency(locale: 'id', symbol: 'Rp')
+                    NumberFormat.currency(locale: 'id', symbol: 'Rp ')
                         .format(calculateTotalPrice()),
                     style: const TextStyle(
                       fontSize: 20,

@@ -120,7 +120,9 @@ class ProdukDetail extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 20),
-                          child: Text(harga),
+                          child: Text(
+                            '${NumberFormat.currency(locale: 'id', symbol: 'Rp ').format(double.parse(harga ?? '0'))}',
+                          ),
                         ),
                       ],
                     ),

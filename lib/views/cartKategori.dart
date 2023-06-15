@@ -108,7 +108,7 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Harga: ${NumberFormat.currency(locale: 'id', symbol: 'Rp').format(double.parse(produkData[index]['harga'] ?? '0'))}',
+                            'Harga: ${NumberFormat.currency(locale: 'id', symbol: 'Rp ').format(double.parse(produkData[index]['harga'] ?? '0'))}',
                             style: const TextStyle(fontSize: 14),
                           ),
                           const SizedBox(height: 8),
