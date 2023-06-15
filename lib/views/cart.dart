@@ -50,7 +50,6 @@ class cartScreeneState extends State<cartScreen> {
     print(cartData);
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -60,37 +59,113 @@ class cartScreeneState extends State<cartScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(16.0),
-                child: DataTable(
-                  columns: const [
-                    DataColumn(label: Text('No')),
-                    DataColumn(label: Text('Nama Produk')),
-                    DataColumn(label: Text('Kuantitas')),
-                    DataColumn(label: Text('Harga')),
-                    DataColumn(label: Text('Action')),
-                  ],
-                  rows: List.generate(
-                    cartData.length,
-                    (index) {
-                      final item = cartData[index];
-                      return DataRow(
-                        cells: [
-                          DataCell(Text((index + 1).toString())),
-                          DataCell(Text(item['nama'].toString())),
-                          DataCell(Text(item['jumlah'].toString())),
-                          DataCell(Text(item['harga'].toString())),
-                          DataCell(ElevatedButton(
-                            onPressed: () {
-                              removeItem(index);
-                            },
-                            child: const Icon(Icons.delete),
-                          )),
-                        ],
-                      );
-                    },
+            Card(
+              child: SingleChildScrollView(
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(16.0),
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(
+                        label: Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Nama Produk',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Kuantitas',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Harga',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Action',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                    rows: List.generate(
+                      cartData.length,
+                      (index) {
+                        final item = cartData[index];
+                        return DataRow(
+                          cells: [
+                            DataCell(
+                              Text(
+                                (index + 1).toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                item['nama'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                item['jumlah'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                item['harga'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              ElevatedButton(
+                                onPressed: () {
+                                  removeItem(index);
+                                },
+                                child: const Icon(Icons.delete),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -98,16 +173,22 @@ class cartScreeneState extends State<cartScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     'Total Harga: ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     NumberFormat.currency(locale: 'id', symbol: 'Rp')
                         .format(calculateTotalPrice()),
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
