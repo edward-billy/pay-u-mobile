@@ -101,6 +101,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff151515),
       key: _scaffoldKey,
       body: SingleChildScrollView(
         child: Padding(

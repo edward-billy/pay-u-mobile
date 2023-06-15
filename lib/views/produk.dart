@@ -32,6 +32,7 @@ class _ProdukScreenState extends State<ProdukScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff151515),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(16.0),

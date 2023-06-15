@@ -20,6 +20,8 @@ class cartKategoriScreen extends StatefulWidget {
 }
 
 class _cartKategoriScreenState extends State<cartKategoriScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   List<Map<String, dynamic>> produkData = [];
   List<int> quantities = [];
   List<TextEditingController> quantityControllers = [];
@@ -51,6 +53,15 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
     super.dispose();
   }
 
+  _showMsg(msg) {
+    final snackBar = SnackBar(
+      content: Text(msg),
+    );
+    if (_scaffoldKey.currentState != null) {
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 1194;
@@ -58,6 +69,7 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text("Cart Product"),
       ),
@@ -210,10 +222,10 @@ class _cartKategoriScreenState extends State<cartKategoriScreen> {
           MaterialPageRoute(builder: (context) => const cartScreen()),
         );
       } else {
-        print("Stok Habis");
+        _showMsg("Stok Habis");
       }
     } catch (e) {
-      print('Terjadi kesalahan: $e');
+      _showMsg("Stok Habis ");
     }
   }
 }

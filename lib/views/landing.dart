@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:payu/views/register.dart';
+
+import 'login.dart';
 
 class landing extends StatelessWidget {
   const landing({super.key});
@@ -15,7 +18,7 @@ class landing extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-                    child: Text(
+                    child: const Text(
                       "LET'S START YOUR EASY DAY",
                       style: TextStyle(
                         fontSize: 50,
@@ -33,14 +36,19 @@ class landing extends StatelessWidget {
                         style: TextButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 53, 51, 51),
                             minimumSize: Size(150, 60),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(1),
                             ),
                             side: BorderSide(width: 1, color: Colors.white)),
-                        onPressed: () {},
-                        child: Text(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Register()),
+                          );
+                        },
+                        child: const Text(
                           'REGISTER',
                           style: TextStyle(
                               color: Colors.white,
@@ -48,19 +56,25 @@ class landing extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 50,
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.white,
                             minimumSize: Size(150, 60),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(1))),
-                        onPressed: () {},
-                        child: Text(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()),
+                          );
+                        },
+                        child: const Text(
                           'LOGIN',
                           style: TextStyle(
                               color: Colors.black,
@@ -68,7 +82,7 @@ class landing extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                     ],
@@ -79,7 +93,7 @@ class landing extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('images/cashierbig.png'),
                     fit: BoxFit.cover),

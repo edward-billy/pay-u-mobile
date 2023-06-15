@@ -16,8 +16,8 @@ class cartScreeneState extends State<cartScreen> {
   List<Map<String, dynamic>> cartData = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     loadProdukData();
   }
 
@@ -40,14 +40,6 @@ class cartScreeneState extends State<cartScreen> {
     }
 
     return totalPrice;
-  }
-
-  void removeItem(int index) {
-    setState(() {
-      cartData.removeAt(index);
-    });
-
-    print(cartData);
   }
 
   Widget build(BuildContext context) {
@@ -102,15 +94,6 @@ class cartScreeneState extends State<cartScreen> {
                           ),
                         ),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Action',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                     ],
                     rows: List.generate(
                       cartData.length,
@@ -152,14 +135,6 @@ class cartScreeneState extends State<cartScreen> {
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                            ),
-                            DataCell(
-                              ElevatedButton(
-                                onPressed: () {
-                                  removeItem(index);
-                                },
-                                child: const Icon(Icons.delete),
                               ),
                             ),
                           ],

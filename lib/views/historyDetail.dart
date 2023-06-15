@@ -16,11 +16,13 @@ class HistoryDetail extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail Transaksi $invoiceId'),
       ),
+      backgroundColor: const Color(0xff151515),
       body: FutureBuilder<List<dynamic>>(
         future: data,
         builder: (context, snapshot) {
@@ -44,7 +46,7 @@ class HistoryDetail extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 100),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -66,38 +68,40 @@ class HistoryDetail extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  DataTable(
-                    columns: const [
-                      DataColumn(label: Text('No')),
-                      DataColumn(label: Text('Produk')),
-                      DataColumn(label: Text('Jumlah')),
-                      DataColumn(label: Text('Harga')),
-                    ],
-                    rows: [
-                      ...historyData.asMap().entries.map((entry) {
-                        int index = entry.key + 1;
-                        var item = entry.value;
-                        return DataRow(
+                  Card(
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('No')),
+                        DataColumn(label: Text('Produk')),
+                        DataColumn(label: Text('Jumlah')),
+                        DataColumn(label: Text('Harga')),
+                      ],
+                      rows: [
+                        ...historyData.asMap().entries.map((entry) {
+                          int index = entry.key + 1;
+                          var item = entry.value;
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(index.toString())),
+                              DataCell(Text(item['namaproduk'].toString())),
+                              DataCell(Text(item['jumlah'].toString())),
+                              DataCell(Text(NumberFormat.currency(
+                                      locale: 'id', symbol: 'Rp ')
+                                  .format(item['harga']))),
+                            ],
+                          );
+                        }),
+                        DataRow(
                           cells: [
-                            DataCell(Text(index.toString())),
-                            DataCell(Text(item['namaproduk'].toString())),
-                            DataCell(Text(item['jumlah'].toString())),
-                            DataCell(Text(NumberFormat.currency(
-                                    locale: 'id', symbol: 'Rp ')
-                                .format(item['harga']))),
+                            const DataCell(Text('Total',
+                                style: TextStyle(fontWeight: FontWeight.bold))),
+                            const DataCell(Text('')),
+                            const DataCell(Text('')),
+                            DataCell(Text(formattedTotal)),
                           ],
-                        );
-                      }),
-                      DataRow(
-                        cells: [
-                          const DataCell(Text('Total',
-                              style: TextStyle(fontWeight: FontWeight.bold))),
-                          const DataCell(Text('')),
-                          const DataCell(Text('')),
-                          DataCell(Text(formattedTotal)),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],

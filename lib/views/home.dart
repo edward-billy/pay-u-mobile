@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:payu/views/dashboard.dart';
 import 'package:payu/views/history.dart';
+import 'package:payu/views/landing.dart';
 import 'package:payu/views/produk.dart';
 import 'package:payu/views/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,7 +99,7 @@ class _HomeState extends State<Home> {
       localStorage.remove('token');
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
+          context, MaterialPageRoute(builder: (context) => const landing()));
     }
   }
 }

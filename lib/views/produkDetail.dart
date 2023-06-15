@@ -26,6 +26,7 @@ class ProdukDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detail Produk'),
       ),
+      backgroundColor: const Color(0xff151515),
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.6,
