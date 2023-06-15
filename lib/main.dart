@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'views/home.dart';
 import 'views/login.dart';
+import 'views/landing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

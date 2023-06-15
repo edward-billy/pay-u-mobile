@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  static String _url = 'http://192.168.0.10:8000/api';
+  static String _url = 'http://192.168.168.28:8000/api';
   dynamic token;
   // dynamic cookieManager;
 
