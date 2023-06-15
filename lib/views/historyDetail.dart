@@ -36,7 +36,11 @@ class HistoryDetail extends StatelessWidget {
             List<dynamic> historyData = snapshot.data!;
             // Calculate the total
             int total = historyData.fold(
-                0, (sum, item) => sum + int.parse(item['harga'].toString()));
+                0,
+                (sum, item) =>
+                    sum +
+                    int.parse(item['harga'].toString()) *
+                        int.parse(item['jumlah'].toString()));
 
             // Format the total
             String formattedTotal =
@@ -75,6 +79,7 @@ class HistoryDetail extends StatelessWidget {
                         DataColumn(label: Text('Produk')),
                         DataColumn(label: Text('Jumlah')),
                         DataColumn(label: Text('Harga')),
+                        DataColumn(label: Text('Total Harga')),
                       ],
                       rows: [
                         ...historyData.asMap().entries.map((entry) {
@@ -88,6 +93,9 @@ class HistoryDetail extends StatelessWidget {
                               DataCell(Text(NumberFormat.currency(
                                       locale: 'id', symbol: 'Rp ')
                                   .format(item['harga']))),
+                              DataCell(Text(NumberFormat.currency(
+                                      locale: 'id', symbol: 'Rp ')
+                                  .format(item['harga'] * item['jumlah']))),
                             ],
                           );
                         }),
@@ -95,6 +103,7 @@ class HistoryDetail extends StatelessWidget {
                           cells: [
                             const DataCell(Text('Total',
                                 style: TextStyle(fontWeight: FontWeight.bold))),
+                            const DataCell(Text('')),
                             const DataCell(Text('')),
                             const DataCell(Text('')),
                             DataCell(Text(formattedTotal)),
