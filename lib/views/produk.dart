@@ -34,61 +34,89 @@ class _ProdukScreenState extends State<ProdukScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          alignment: Alignment.center,
           padding: const EdgeInsets.all(16.0),
-          child: DataTable(
-            columns: const [
-              DataColumn(label: Text('No')),
-              DataColumn(label: Text('Nama Produk')),
-              DataColumn(label: Text('Kategori')),
-              DataColumn(label: Text('Deskripsi')),
-              DataColumn(label: Text('Stok')),
-              DataColumn(label: Text('Harga')),
-              DataColumn(label: Text('Action')),
-            ],
-            rows: List<DataRow>.generate(
-              produkData.length,
-              (index) => DataRow(
-                cells: [
-                  DataCell(Text((index + 1).toString())),
-                  DataCell(Text(produkData[index]['nama'].toString())),
-                  DataCell(
-                      Text(produkData[index]['kategori']['nama'].toString())),
-                  DataCell(Text(produkData[index]['deskripsi'].toString())),
-                  DataCell(Text(produkData[index]['stok'].toString())),
-                  DataCell(
-                    Text(
-                      NumberFormat.currency(
-                        locale: 'id',
-                        symbol: 'Rp ',
-                      ).format(double.parse(produkData[index]['harga'] ?? '0')),
-                    ),
-                  ),
-                  DataCell(
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProdukDetail(
-                                id: produkData[index]['id'],
-                                nama: produkData[index]['nama'],
-                                kategori: produkData[index]['kategori']['nama']
-                                    .toString(),
-                                deskripsi:
-                                    produkData[index]['deskripsi'].toString(),
-                                stok: produkData[index]['stok'].toString(),
-                                harga: produkData[index]['harga'].toString(),
-                                data: getProdukDetail(produkData[index]['id']),
-                              ),
-                            ));
-                      },
-                      child: const Text('Detail'),
-                    ),
-                  ),
-                ],
+          child: Column(
+            children: [
+              const Text(
+                'Produk Market',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+              const SizedBox(height: 16),
+              Center(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('No')),
+                        DataColumn(label: Text('Nama Produk')),
+                        DataColumn(label: Text('Kategori')),
+                        DataColumn(label: Text('Deskripsi')),
+                        DataColumn(label: Text('Stok')),
+                        DataColumn(label: Text('Harga')),
+                        DataColumn(label: Text('Action')),
+                      ],
+                      rows: List<DataRow>.generate(
+                        produkData.length,
+                        (index) => DataRow(
+                          cells: [
+                            DataCell(Text((index + 1).toString())),
+                            DataCell(
+                                Text(produkData[index]['nama'].toString())),
+                            DataCell(Text(produkData[index]['kategori']['nama']
+                                .toString())),
+                            DataCell(Text(
+                                produkData[index]['deskripsi'].toString())),
+                            DataCell(
+                                Text(produkData[index]['stok'].toString())),
+                            DataCell(
+                              Text(
+                                NumberFormat.currency(
+                                  locale: 'id',
+                                  symbol: 'Rp ',
+                                ).format(double.parse(
+                                    produkData[index]['harga'] ?? '0')),
+                              ),
+                            ),
+                            DataCell(
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProdukDetail(
+                                        id: produkData[index]['id'],
+                                        nama: produkData[index]['nama'],
+                                        kategori: produkData[index]['kategori']
+                                                ['nama']
+                                            .toString(),
+                                        deskripsi: produkData[index]
+                                                ['deskripsi']
+                                            .toString(),
+                                        stok: produkData[index]['stok']
+                                            .toString(),
+                                        harga: produkData[index]['harga']
+                                            .toString(),
+                                        data: getProdukDetail(
+                                            produkData[index]['id']),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Detail'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -97,8 +125,8 @@ class _ProdukScreenState extends State<ProdukScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    const cartScreen()), // Ganti NewPage dengan halaman baru yang ingin Anda tuju
+              builder: (context) => const cartScreen(),
+            ),
           );
         },
         child: const Icon(Icons.shopping_cart),

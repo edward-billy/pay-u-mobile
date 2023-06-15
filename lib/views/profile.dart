@@ -12,7 +12,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isObscurePassword = true;
+  // bool isObscurePassword = true;
   String name = '';
   String email = '';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -54,63 +54,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        body: Container(
-          padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: ListView(
-              children: [
-                const SizedBox(height: 30),
-                TextField(
-                  controller: nameController,
-                  onChanged: (value) {
-                    setState(() {
-                      updatedName = value;
-                    });
-                  },
-                ),
-                TextField(
-                  controller: emailController,
-                  onChanged: (value) {
-                    setState(() {
-                      updatedEmail = value;
-                    });
-                  },
-                ),
-                // buildTextField(
-                //     "Role", "Kasir / manager", false), //ini jadii drop down
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (updatedName == '') {
-                          updatedName = nameController.text;
-                        }
-                        print("email: $email");
-                        if (updatedEmail == '') {
-                          updatedEmail = emailController.text;
-                        }
-                        updateProfile(updatedName, updatedEmail);
-                      },
-                      child: const Text("UPDATE",
-                          style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2,
-                              color: Colors.white)),
-                    )
-                  ],
-                )
-              ],
+      key: _scaffoldKey,
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
             ),
-          ),
-        ));
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 10),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'Update Profile',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                width: constraints.maxWidth * 0.6,
+                                child: TextField(
+                                  controller: nameController,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updatedName = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: constraints.maxWidth * 0.6,
+                                child: TextField(
+                                  controller: emailController,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updatedEmail = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              // buildTextField("Role", "Kasir / manager", false), //ini jadii drop down
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (updatedName == '') {
+                            updatedName = nameController.text;
+                          }
+                          print("email: $email");
+                          if (updatedEmail == '') {
+                            updatedEmail = emailController.text;
+                          }
+                          updateProfile(updatedName, updatedEmail);
+                        },
+                        child: const Text(
+                          "UPDATE",
+                          style: TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 2,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Future<void> updateProfile(String newName, String newEmail) async {

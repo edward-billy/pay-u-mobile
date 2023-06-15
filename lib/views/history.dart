@@ -103,64 +103,91 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       key: _scaffoldKey,
       body: SingleChildScrollView(
-        child: Container(
-          alignment: Alignment.center,
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              DataTable(
-                columns: const [
-                  DataColumn(label: Text('No')),
-                  DataColumn(label: Text('Invoice ID')),
-                  DataColumn(label: Text('Nama Kasir')),
-                  DataColumn(label: Text('Nama Customer')),
-                  DataColumn(label: Text('Total')),
-                  DataColumn(label: Text('Action')),
-                ],
-                rows: List<DataRow>.generate(
-                  historyData.length,
-                  (index) => DataRow(
-                    cells: [
-                      DataCell(Text((index + 1).toString())),
-                      DataCell(
-                          Text(historyData[index]['invoiceId'].toString())),
-                      DataCell(Text(historyData[index]['name'].toString())),
-                      DataCell(Text(historyData[index]['nama'].toString())),
-                      DataCell(
-                        Text(
-                          NumberFormat.currency(
-                            locale: 'id',
-                            symbol: 'Rp ',
-                          ).format(historyData[index]['total']),
-                        ),
-                      ),
-                      DataCell(
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HistoryDetail(
-                                  invoiceId: historyData[index]['invoiceId']
-                                      .toString(),
-                                  data: getHistoryDetail((index + 1)),
-                                  nama: historyData[index]['nama'].toString(),
-                                  name: historyData[index]['name'].toString(),
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Text('Detail'),
-                        ),
-                      ),
-                    ],
-                  ),
+              const Text(
+                'Histori Belanja',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: generateAndDownloadPDF,
-                child: Text('Download PDF'),
+              const SizedBox(height: 16),
+              Center(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        DataTable(
+                          columns: const [
+                            DataColumn(label: Text('No')),
+                            DataColumn(label: Text('Invoice ID')),
+                            DataColumn(label: Text('Nama Kasir')),
+                            DataColumn(label: Text('Nama Customer')),
+                            DataColumn(label: Text('Total')),
+                            DataColumn(label: Text('Action')),
+                          ],
+                          rows: List<DataRow>.generate(
+                            historyData.length,
+                            (index) => DataRow(
+                              cells: [
+                                DataCell(Text((index + 1).toString())),
+                                DataCell(
+                                  Text(historyData[index]['invoiceId']
+                                      .toString()),
+                                ),
+                                DataCell(
+                                  Text(historyData[index]['name'].toString()),
+                                ),
+                                DataCell(
+                                  Text(historyData[index]['nama'].toString()),
+                                ),
+                                DataCell(
+                                  Text(
+                                    NumberFormat.currency(
+                                      locale: 'id',
+                                      symbol: 'Rp ',
+                                    ).format(historyData[index]['total']),
+                                  ),
+                                ),
+                                DataCell(
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HistoryDetail(
+                                            invoiceId: historyData[index]
+                                                    ['invoiceId']
+                                                .toString(),
+                                            data: getHistoryDetail((index + 1)),
+                                            nama: historyData[index]['nama']
+                                                .toString(),
+                                            name: historyData[index]['name']
+                                                .toString(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Detail'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: generateAndDownloadPDF,
+                          child: Text('Download PDF'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -171,8 +198,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    const cartScreen()), // Ganti NewPage dengan halaman baru yang ingin Anda tuju
+              builder: (context) => const cartScreen(),
+            ),
           );
         },
         child: const Icon(Icons.shopping_cart),
